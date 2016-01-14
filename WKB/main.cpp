@@ -33,12 +33,17 @@ double f(double x, double E){
     return sqrt(2 * (V(x) - E));
 }
 
+void getTurningPoints(vector<double> &x, double E){
+    //‹‰ğ
+    gsl_poly_solve_cubic(-3.0 / (2 * b), 0.0, (3.0 / b)*(1 / (6.0*b*b) + E), &x[0], &x[1], &x[2]);
+
+    //“]‰ñ“_‚Ì•\¦
+    for (int i = 0; i < x.size(); i++){
+        cout << "x" << i << " : " << x[i];
+    }
+}
+
 int main(){
-    double x0, x1, x2;
-
-    gsl_poly_solve_cubic(-3.0 / (2 * b), 0.0, (3.0 / b)*(1 / (6.0*b*b) - 1.2), &x0, &x1, &x2);
-
-    printf("%lf %lf %lf\n", x0, x1, x2);
 
     double h = (x2 - x1) / N;
     double S_even, S_odd, S;
