@@ -15,9 +15,14 @@ const double b = 1.0 / 3.0;
 
 const double E_BEGIN = -1.0 / (6.0*b*b);
 const double E_END = 0.0;
+const int EN = 100;
 
 double i2x(int i, double x1, double h){
     return x1 + i * h;
+}
+
+double i2E(int i){
+    return E_BEGIN + i * (E_END - E_BEGIN) / EN;
 }
 
 //ポテンシャル
@@ -38,8 +43,8 @@ void calcTurningPoints(vector<double> &x, double E){
     gsl_poly_solve_cubic(-3.0 / (2 * b), 0.0, (3.0 / b)*(1 / (6.0*b*b) + E), &x[0], &x[1], &x[2]);
 
     //転回点の表示
-    for (int i = 0; i < x.size(); i++){
-        cout << "x" << i << " : " << x[i];
+    for (int i = 0; i < (int)x.size(); i++){
+        cout << "x" << i << " : " << x[i] << endl;
     }
 }
 
@@ -56,7 +61,11 @@ double calcEta(vector<double> &x, double E){
     for (int i = 1; i < N / 2; i++){
         S_odd += f(i2x(2 * i - 1, x[1], h), E);
     }
-    return h * (f(i2x(0, x[1], h), E) + 2 * S_even + 4 * S_odd + f(i2x(N - 1, x[1], h), E)) / 3.0;
+    return h * (f(i2x(0, x[1], h) + 0.01, E) + 2 * S_even + 4 * S_odd + f(i2x(N - 1, x[1], h), E)) / 3.0;
+}
+
+double calcT(double eta){
+    return exp(-2 * eta) / pow(1 + pow(exp(-eta) / 2.0, 2), 2);
 }
 
 int main(){
@@ -64,6 +73,10 @@ int main(){
     double E = -1.2;
 
     calcTurningPoints(x, E);
+    double eta = calcEta(x, E);
+    double T = calcT(eta);
+
+    cout << T << endl;
 
     return 0;
 }
