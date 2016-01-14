@@ -33,7 +33,7 @@ double f(double x, double E){
     return sqrt(2 * (V(x) - E));
 }
 
-void getTurningPoints(vector<double> &x, double E){
+void calcTurningPoints(vector<double> &x, double E){
     //‹‰ğ
     gsl_poly_solve_cubic(-3.0 / (2 * b), 0.0, (3.0 / b)*(1 / (6.0*b*b) + E), &x[0], &x[1], &x[2]);
 
@@ -63,7 +63,7 @@ int main(){
     vector<double> x(3);
     double E = -1.2;
 
-    getTurningPoints(x, E);
+    calcTurningPoints(x, E);
 
     return 0;
 }
