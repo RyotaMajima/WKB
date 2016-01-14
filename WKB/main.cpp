@@ -62,11 +62,11 @@ double calcEta(vector<double> &x, double E){
     for (int i = 1; i < N / 2; i++){
         S_odd += f(i2x(2 * i - 1, x[1], h), E);
     }
-    return h * (f(i2x(0, x[1], h) + 0.01, E) + 2 * S_even + 4 * S_odd + f(i2x(N - 1, x[1], h), E)) / 3.0;
+    return h * (f(i2x(0, x[1], h) + 0.0001, E) + 2 * S_even + 4 * S_odd + f(i2x(N - 1, x[1], h), E)) / 3.0;
 }
 
 double calcT(double eta){
-    return exp(-2 * eta);// / pow(1 + pow(exp(-eta) / 2.0, 2), 2);
+    return exp(-2 * eta) / pow(1 + pow(exp(-eta) / 2.0, 2), 2);
 }
 
 int main(){
