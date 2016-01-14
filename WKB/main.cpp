@@ -43,24 +43,27 @@ void getTurningPoints(vector<double> &x, double E){
     }
 }
 
-int main(){
+double calcEta(vector<double> &x, double E){
+    double h = (x[2] - x[1]) / N;
 
-    double h = (x2 - x1) / N;
-    double S_even, S_odd, S;
-    S_even = S_odd = S = 0.0;
-    double E = -1.2;
+    double S_even, S_odd;
+    S_even = S_odd = 0.0;
 
     for (int i = 1; i < (N / 2) - 1; i++){
-        S_even += f(i2x(2 * i, x1, h), E);
+        S_even += f(i2x(2 * i, x[1], h), E);
     }
 
     for (int i = 1; i < N / 2; i++){
-        S_odd += f(i2x(2 * i - 1, x1, h), E);
+        S_odd += f(i2x(2 * i - 1, x[1], h), E);
     }
+    return h * (f(i2x(0, x[1], h), E) + 2 * S_even + 4 * S_odd + f(i2x(N - 1, x[1], h), E)) / 3.0;
+}
 
-    S = h * (f(i2x(0, x1, h), E) + 2 * S_even + 4 * S_odd + f(i2x(N - 1, x1, h), E)) / 3.0;
+int main(){
+    vector<double> x(3);
+    double E = -1.2;
 
-    cout << S << endl;
+    getTurningPoints(x, E);
 
     return 0;
 }
