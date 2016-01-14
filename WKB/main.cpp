@@ -4,18 +4,19 @@
 #pragma comment(lib, "gsl.lib")
 #include <mkl.h>
 #include <iostream>
+#include <fstream>
 #include <cstdio>
 #include <cmath>
 #include <vector>
 #include <gsl/gsl_poly.h>
 using namespace std;
 
-const int N = 100; //空間分割数
+const int N = 500; //空間分割数
 const double b = 1.0 / 3.0;
 
 const double E_BEGIN = -1.0 / (6.0*b*b);
 const double E_END = 0.0;
-const int EN = 100;
+const int EN = 500;
 
 double i2x(int i, double x1, double h){
     return x1 + i * h;
@@ -42,10 +43,10 @@ void calcTurningPoints(vector<double> &x, double E){
     //求解
     gsl_poly_solve_cubic(-3.0 / (2 * b), 0.0, (3.0 / b)*(1 / (6.0*b*b) + E), &x[0], &x[1], &x[2]);
 
-    //転回点の表示
-    for (int i = 0; i < (int)x.size(); i++){
-        cout << "x" << i << " : " << x[i] << endl;
-    }
+    ////転回点の表示
+    //for (int i = 0; i < (int)x.size(); i++){
+    //    cout << "x" << i << " : " << x[i] << endl;
+    //}
 }
 
 double calcEta(vector<double> &x, double E){
@@ -65,18 +66,22 @@ double calcEta(vector<double> &x, double E){
 }
 
 double calcT(double eta){
-    return exp(-2 * eta) / pow(1 + pow(exp(-eta) / 2.0, 2), 2);
+    return exp(-2 * eta);// / pow(1 + pow(exp(-eta) / 2.0, 2), 2);
 }
 
 int main(){
     vector<double> x(3);
-    double E = -1.2;
 
-    calcTurningPoints(x, E);
-    double eta = calcEta(x, E);
-    double T = calcT(eta);
+    ofstream ofs("./output/T.txt");
 
-    cout << T << endl;
+    for (int i = 0; i < EN; i++){
+        double E = i2E(i);
+        calcTurningPoints(x, E);
+        double eta = calcEta(x, E);
+        double T = calcT(eta);
+
+        ofs << E << "\t" << T << endl;
+    }
 
     return 0;
 }
