@@ -11,12 +11,12 @@
 #include <gsl/gsl_poly.h>
 using namespace std;
 
-const int N = 500; //‹óŠÔ•ªŠ„”
+const int N = 1000; //‹óŠÔ•ªŠ„”
 const double b = 1.0 / 3.0;
 
-const double E_BEGIN = -1.0 / (6.0 * b*b) + 0.1;
-const double E_END = -0.1;
-const int EN = 500;
+const double E_BEGIN = -1.0 / (6.0 * b*b);
+const double E_END = 0.0;
+const int EN = 1000;
 
 double i2x(int i, double x1, double h){
     return x1 + i * h;
@@ -80,7 +80,7 @@ int main(){
         double eta = calcEta(x, E);
         double T = calcT(eta);
 
-        ofs << E << "\t" << (sqrt(2 * -E) / (2 * x[1])) * T << endl;
+        ofs << E << "\t" << (1.0 / (2.0 * 2.0 * M_PI)) * T << endl;
     }
 
     return 0;
