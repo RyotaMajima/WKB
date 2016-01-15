@@ -14,8 +14,8 @@ using namespace std;
 const int N = 500; //‹óŠÔ•ªŠ„”
 const double b = 1.0 / 3.0;
 
-const double E_BEGIN = -1.0 / (6.0*b*b);
-const double E_END = 0.0;
+const double E_BEGIN = -1.0 / (6.0 * b*b) + 0.1;
+const double E_END = -0.1;
 const int EN = 500;
 
 double i2x(int i, double x1, double h){
@@ -28,13 +28,13 @@ double i2E(int i){
 
 //ƒ|ƒeƒ“ƒVƒƒƒ‹
 double V(double x){
-    return -(b / 3.0)*x*x*x + (1.0 / 2.0) * x*x - 1.0 / (6.0 * b*b);
+    return -(b / 3.0)*x*x*x + (1.0 / 2.0) * x*x -1.0 / (6.0 * b*b);
 }
 
 //”íÏ•ªŠÖ”
 double f(double x, double E){
     if (E > V(x)){
-        cout << "E > V(x)" << endl;
+        cout << "x: " << x << "\t" << "E > V(x)" << endl;
     }
     return sqrt(2 * (V(x) - E));
 }
@@ -62,7 +62,7 @@ double calcEta(vector<double> &x, double E){
     for (int i = 1; i < N / 2; i++){
         S_odd += f(i2x(2 * i - 1, x[1], h), E);
     }
-    return h * (f(i2x(0, x[1], h) + 0.0001, E) + 2 * S_even + 4 * S_odd + f(i2x(N - 1, x[1], h), E)) / 3.0;
+    return h * (f(i2x(0, x[1], h) + 0.00001, E) + 2 * S_even + 4 * S_odd + f(i2x(N - 1, x[1], h), E)) / 3.0;
 }
 
 double calcT(double eta){
@@ -74,13 +74,13 @@ int main(){
 
     ofstream ofs("./output/T.txt");
 
-    for (int i = 0; i < EN; i++){
+    for (int i = 1; i < EN; i++){
         double E = i2E(i);
         calcTurningPoints(x, E);
         double eta = calcEta(x, E);
         double T = calcT(eta);
 
-        ofs << E << "\t" << T << endl;
+        ofs << E << "\t" << (sqrt(2 * -E) / (2 * x[1])) * T << endl;
     }
 
     return 0;

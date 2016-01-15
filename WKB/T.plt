@@ -11,3 +11,4 @@ pl "./output/T.txt" ti "" w l lc rgb "black"
 
 set output
 set ter pop
+reset
