@@ -1,8 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #define _USE_MATH_DEFINES
-#pragma comment(lib, "mkl_rt.lib")
 #pragma comment(lib, "gsl.lib")
-#include <mkl.h>
 #include <iostream>
 #include <fstream>
 #include <cstdio>
@@ -12,7 +10,7 @@
 using namespace std;
 
 const int N = 1000; //ãÛä‘ï™äÑêî
-const double b = 1.0 / 3.0;
+const double b = 1.0 / 2.5;
 
 const double E_BEGIN = -1.0 / (6.0 * b*b);
 const double E_END = 0.0;
@@ -44,9 +42,11 @@ void calcTurningPoints(vector<double> &x, double E){
     gsl_poly_solve_cubic(-3.0 / (2 * b), 0.0, (3.0 / b)*(1 / (6.0*b*b) + E), &x[0], &x[1], &x[2]);
 
     ////ì]âÒì_ÇÃï\é¶
-    //for (int i = 0; i < (int)x.size(); i++){
+    //cout << E << "\t";
+    //for (int i = 1; i < (int)x.size(); i++){
     //    cout << "x" << i << " : " << x[i] << endl;
     //}
+    //cout << endl;
 }
 
 double calcEta(vector<double> &x, double E){
@@ -80,7 +80,10 @@ int main(){
         double eta = calcEta(x, E);
         double T = calcT(eta);
 
-        ofs << E << "\t" << (1.0 / (2.0 * 2.0 * M_PI)) * T << endl;
+        ofs << fixed;
+        ofs << E << "\t";
+        ofs << scientific;
+        ofs << (1.0 / (2.0 * 2.0 * M_PI)) * T << endl;
     }
 
     return 0;

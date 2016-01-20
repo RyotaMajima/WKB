@@ -6,7 +6,7 @@ unset multiplot; reset
 set logscale y
 set format y "%.1e"
 set grid
-set xlab "E"; set ylab "T"
+set xlab "E"; set ylab "{/Symbol t}^{-1}"
 pl "./output/T.txt" ti "" w l lc rgb "black"
 
 set output
