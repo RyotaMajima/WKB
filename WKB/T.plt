@@ -1,7 +1,7 @@
 unset multiplot; reset
 
-set ter tikz stand size 297mm,210mm font ",12"
-set output "./output/graph.tex"
+#set ter tikz stand size 297mm,210mm font ",12"
+#set output "./output/graph.tex"
 set multiplot layout 1,2
 
 load 'C:\Users\sigmajima\Source\Repos\EigenFunction\EigenFunction/params.txt'
@@ -35,12 +35,12 @@ set format y "%.1e"
 set grid lw 2
 set xlab "$E$"; set ylab "$\\tau^{-1}$"
 
-set label 1 point ps 2 lc rgb "red" at ER0,abs(EI0)
+set label 1 point ps 3 lc rgb "red" at ER0,abs(EI0)
 if(peakNum > 1){
-	set label 2 point ps 2 lc rgb "blue" at ER1,abs(EI1)
+	set label 2 point ps 3 lc rgb "blue" at ER1,abs(EI1)
 }
 if(peakNum > 2){
-	set label 3 point ps 2 lc rgb "green" at ER2,abs(EI2)
+	set label 3 point ps 3 lc rgb "green" at ER2,abs(EI2)
 }
 
 pl "./output/T.txt" ti "" w l lc rgb "black"
