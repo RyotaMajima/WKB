@@ -10,7 +10,7 @@
 using namespace std;
 
 const int N = 1000; //‹óŠÔ•ªŠ„”
-const double b = 1.0 / 3.5;
+const double b = 1.0 / 4.5;
 
 const double E_BEGIN = -1.0 / (6.0 * b*b);
 const double E_END = 0.0;
@@ -62,7 +62,7 @@ double calcEta(vector<double> &x, double E){
     for (int i = 1; i < N / 2; i++){
         S_odd += f(i2x(2 * i - 1, x[1], h), E);
     }
-    return h * (f(i2x(0, x[1], h) + 0.00001, E) + 2 * S_even + 4 * S_odd + f(i2x(N - 1, x[1], h), E)) / 3.0;
+    return h * (f(i2x(0, x[1], h) + 0.000001, E) + 2 * S_even + 4 * S_odd + f(i2x(N - 1, x[1], h), E)) / 3.0;
 }
 
 double calcT(double eta){
