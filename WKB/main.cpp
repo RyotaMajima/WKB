@@ -26,7 +26,7 @@ double i2E(int i){
 
 //ポテンシャル
 double V(double x){
-    return (-b / 3.0)*x*x*x + (1.0 / 2.0) * x*x -1.0 / (6.0 * b*b);
+    return (-b / 3.0)*x*x*x + (1.0 / 2.0) * x*x - 1.0 / (6.0 * b*b);
 }
 
 //被積分関数
@@ -43,7 +43,7 @@ void calcTurningPoints(vector<double> &x, double E){
 
     ////転回点の表示
     //cout << "E = "<< E << endl;
-    //for (int i = 1; i < (int)x.size(); i++){
+    //for (int i = 0; i < (int)x.size(); i++){
     //    cout << "x" << i << " : " << x[i] << endl;
     //}
     //cout << endl;
@@ -62,7 +62,7 @@ double calcEta(vector<double> &x, double E){
     for (int i = 1; i < N / 2; i++){
         S_odd += f(i2x(2 * i - 1, x[1], h), E);
     }
-    return h * (f(i2x(0, x[1], h) + 0.00001, E) + 2 * S_even + 4 * S_odd + f(i2x(N - 1, x[1], h), E)) / 3.0;
+    return h * (f(i2x(0, x[1], h) + 0.001, E) + 2 * S_even + 4 * S_odd + f(i2x(N - 1, x[1], h), E)) / 3.0;
 }
 
 double calcT(double eta){
