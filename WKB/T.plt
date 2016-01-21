@@ -4,7 +4,8 @@ unset multiplot; reset
 #set output "./output/graph.tex"
 set multiplot layout 1,2
 
-load 'C:\Users\sigmajima\Source\Repos\EigenFunction\EigenFunction/params.txt'
+#load 'C:\Users\sigmajima\Source\Repos\EigenFunction\EigenFunction/params.txt'
+load 'C:\Users\U24E\Source\Repos\EigenFunction\EigenFunction/params.txt'
 
 set ls 1 lc rgb "black" lw 2
 set ls 2 lc rgb "black" dt (10,20)
