@@ -1,8 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #define _USE_MATH_DEFINES
-#pragma comment(lib, "mkl_rt.lib")
 #pragma comment(lib, "gsl.lib")
-#include <mkl.h>
 #include <iostream>
 #include <fstream>
 #include <cstdio>
@@ -28,7 +26,7 @@ double i2E(int i){
 
 //ポテンシャル
 double V(double x){
-    return -(b / 3.0)*x*x*x + (1.0 / 2.0) * x*x -1.0 / (6.0 * b*b);
+    return (-b / 3.0)*x*x*x + (1.0 / 2.0) * x*x - 1.0 / (6.0 * b*b);
 }
 
 //被積分関数
@@ -41,12 +39,14 @@ double f(double x, double E){
 
 void calcTurningPoints(vector<double> &x, double E){
     //求解
-    gsl_poly_solve_cubic(-3.0 / (2 * b), 0.0, (3.0 / b)*(1 / (6.0*b*b) + E), &x[0], &x[1], &x[2]);
+    gsl_poly_solve_cubic(-3.0 / (2 * b), 0.0, (3.0 / b)*(1.0 / (6.0*b*b) + E), &x[0], &x[1], &x[2]);
 
     ////転回点の表示
+    //cout << "E = "<< E << endl;
     //for (int i = 0; i < (int)x.size(); i++){
     //    cout << "x" << i << " : " << x[i] << endl;
     //}
+    //cout << endl;
 }
 
 double calcEta(vector<double> &x, double E){
@@ -62,7 +62,7 @@ double calcEta(vector<double> &x, double E){
     for (int i = 1; i < N / 2; i++){
         S_odd += f(i2x(2 * i - 1, x[1], h), E);
     }
-    return h * (f(i2x(0, x[1], h) + 0.00001, E) + 2 * S_even + 4 * S_odd + f(i2x(N - 1, x[1], h), E)) / 3.0;
+    return h * (f(i2x(0, x[1], h) + 0.001, E) + 2 * S_even + 4 * S_odd + f(i2x(N - 1, x[1], h), E)) / 3.0;
 }
 
 double calcT(double eta){
@@ -70,17 +70,19 @@ double calcT(double eta){
 }
 
 int main(){
-    vector<double> x(3);
-
     ofstream ofs("./output/T.txt");
 
     for (int i = 1; i < EN; i++){
+        vector<double> x(3);
         double E = i2E(i);
         calcTurningPoints(x, E);
         double eta = calcEta(x, E);
         double T = calcT(eta);
 
-        ofs << E << "\t" << (1.0 / (2.0 * 2.0 * M_PI)) * T << endl;
+        ofs << fixed;
+        ofs << E << "\t";
+        ofs << scientific;
+        ofs << T / (2.0 * 2.0 * M_PI) << endl;
     }
 
     return 0;
