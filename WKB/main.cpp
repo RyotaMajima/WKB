@@ -10,7 +10,7 @@
 using namespace std;
 
 const int N = 1000; //‹óŠÔ•ªŠ„”
-const double b = 1.0 / 3.0;
+const double b = 1.0 / 4.0;
 
 const double E_BEGIN = -1.0 / (6.0 * b*b);
 const double E_END = 0.0;

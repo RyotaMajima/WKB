@@ -36,12 +36,17 @@ set format y "%.1e"
 set grid lw 2
 set xlab "$E$"; set ylab "$\\tau^{-1}$"
 
-set label 1 point ps 3 lc rgb "red" at ER0,abs(EI0)
+
+set label 1 point pt 1 ps 3 lc rgb "red" at ER0,abs(EI0)
+set label 2 point pt 6 ps 3 lc rgb "red" at ER0,lambda0
+
 if(peakNum > 1){
-	set label 2 point ps 3 lc rgb "blue" at ER1,abs(EI1)
+	set label 3 point pt 1 ps 3 lc rgb "blue" at ER1,abs(EI1)
+	set label 4 point pt 6 ps 3 lc rgb "blue" at ER1,lambda1
 }
 if(peakNum > 2){
-	set label 3 point ps 3 lc rgb "green" at ER2,abs(EI2)
+	set label 5 point pt 1 ps 3 lc rgb "green" at ER2,abs(EI2)
+	set label 6 point pt 6 ps 3 lc rgb "green" at ER2,lambda2
 }
 
 pl "./output/T.txt" ti "" w l lc rgb "black"
